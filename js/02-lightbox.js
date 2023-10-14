@@ -22,7 +22,12 @@ function createGalleryMarkup(items) {
 function onImageClick(evt) {
     evt.preventDefault();
 
-    const gallery = new SimpleLightbox('.gallery a', {
-    captionsData: 'alt', captionPosition: 'bottom', captionDelay: 250});
+    let lightbox = new SimpleLightbox('.gallery a', {
+        captionsData: 'alt', captionDelay: 250
+    });
+    lightbox.on('closed.simplelightbox', function () {
+        lightbox.refresh();
+    })
 
 }
+

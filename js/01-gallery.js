@@ -1,7 +1,6 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
-console.log(galleryItems);
 
 const galleryList = document.querySelector(".gallery");
 const galleryMarkup = createGalleryMarkup(galleryItems);
@@ -32,13 +31,19 @@ function onImgClick(evt) {
 
     const instance = basicLightbox.create(`
     <img src="${evt.target.dataset.source}" width="800" height="600">
-`);
+`, {
+    onShow: (instance) => {
+      window.addEventListener('keydown', onEscKeyPress);
+    },
+    onClose: (instance) => {
+      window.removeEventListener('keydown', onEscKeyPress);
+    },
+  });
 
 instance.show()
     
-    galleryList.addEventListener('keydown', (evt) => {
-        if (evt.code === 'Escape') {
-            instance.close();
-        }
-    })
+  function onEscKeyPress(evt) {
+  if (evt.code !== 'Escape') return;
+      instance.close();
+}
 }
